@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quota Message Preview</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f5f0eb;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: #333;
+    }
+    .phone-frame {
+      width: 390px;
+      height: 700px;
+      background: #fff;
+      border-radius: 40px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      padding: 40px;
+    }
+    .home-hero { text-align: center; }
+    .home-title-hindi { font-size: 28px; color: #FF9933; font-weight: 700; }
+    .home-title { font-size: 22px; font-weight: 700; color: #1a1a1a; }
+    .home-desc { font-size: 14px; color: #666; margin-top: 8px; line-height: 1.5; }
+    .home-actions { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+    .btn {
+      display: block;
+      padding: 16px;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 600;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary { background: #FF9933; color: #fff; }
+    .btn-secondary { background: #f0e8df; color: #333; }
+
+    /* Toast — exact copy from style.css */
+    .error-toast {
+      position: absolute;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: #c0392b;
+      color: #fff;
+      padding: 14px 24px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 500;
+      max-width: 90%;
+      text-align: center;
+      z-index: 300;
+      transition: transform 0.4s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      line-height: 1.5;
+    }
+    .error-toast.visible {
+      transform: translateX(-50%) translateY(0);
+    }
+    .error-toast a { color: #fff; text-decoration: underline; }
+
+    .label { font-size: 13px; color: #888; }
+  </style>
+</head>
+<body>
+  <div class="phone-frame">
+    <div class="home-hero">
+      <div class="home-title-hindi">हिंदी पाठक</div>
+      <div class="home-title">Hindi Reader</div>
+      <p class="home-desc">Take a photo of any Hindi book page.<br>Tap words to see their English meaning.</p>
+    </div>
+    <div class="home-actions">
+      <label class="btn btn-primary">📷 Take a Photo</label>
+      <label class="btn btn-secondary">🖼️ Choose from Gallery</label>
+    </div>
+
+    <div id="toast" class="error-toast">
+      You've scanned 20 pages — that's the free limit!
+      <a href="#">Tap here to request more access.</a>
+    </div>
+  </div>
+
+  <div class="label">Toast slides up from bottom after the 20th scan attempt</div>
+
+  <script>
+    setTimeout(() => document.getElementById('toast').classList.add('visible'), 400);
+  </script>
+</body>
+</html>

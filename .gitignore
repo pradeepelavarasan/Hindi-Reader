@@ -1,0 +1,10 @@
+node_modules/
+.env
+uploads/
+data/
+*.db
+*.db-journal
+service-account-key.json
+*.pdf
+security-protections.md
+.claude/

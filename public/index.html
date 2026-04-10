@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="हिंदी">
+  <meta name="theme-color" content="#FF9933">
+  <title>Hindi Reader</title>
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========== HOME VIEW ========== -->
+  <div id="view-home" class="view">
+    <div class="home-content">
+      <div class="home-hero">
+        <div class="home-title-hindi">हिंदी पाठक</div>
+        <div class="home-title">Hindi Reader</div>
+        <p class="home-desc">Take a photo of any Hindi book page.<br>Tap words to see their English meaning.</p>
+      </div>
+      <div class="home-actions">
+        <label class="btn btn-primary" for="file-camera">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          Take Photo
+          <input type="file" id="file-camera" accept="image/*" capture="environment">
+        </label>
+        <label class="btn btn-secondary" for="file-gallery">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          Choose from Gallery
+          <input type="file" id="file-gallery" accept="image/*">
+        </label>
+        <button class="btn btn-secondary" id="btn-history">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          View History
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== PROCESSING VIEW ========== -->
+  <div id="view-processing" class="view">
+    <div class="processing-content">
+      <div class="spinner"></div>
+      <h2 class="processing-status" id="processing-status">Reading Hindi text...</h2>
+      <p class="processing-sub" id="processing-sub">Scanning the page for words</p>
+      <div class="processing-steps">
+        <div class="step" id="step-ocr">
+          <div class="step-dot active"></div>
+          <span>Reading text</span>
+        </div>
+        <div class="step" id="step-translate">
+          <div class="step-dot"></div>
+          <span>Translating words</span>
+        </div>
+        <div class="step" id="step-done">
+          <div class="step-dot"></div>
+          <span>Almost ready</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== SCAN VIEW ========== -->
+  <div id="view-scan" class="view">
+    <div class="scan-header">
+      <button class="btn-back" id="btn-scan-back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <div class="mode-toggle">
+        <button class="mode-btn" id="btn-mode-words">Words</button>
+        <button class="mode-btn active" id="btn-mode-lines">Lines</button>
+      </div>
+      <div class="scan-header-right">
+        <span class="scan-word-count" id="scan-word-count"></span>
+        <button class="btn-retranslate" id="btn-retranslate" title="Re-analyze and translate">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.95"/></svg>
+          Re-translate
+        </button>
+      </div>
+    </div>
+    <div class="scan-container" id="scan-container">
+      <div class="image-wrapper" id="image-wrapper">
+        <img id="scan-image" src="" alt="Scanned page" draggable="false">
+        <div id="word-overlays"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== HISTORY VIEW ========== -->
+  <div id="view-history" class="view">
+    <div class="scan-header">
+      <button class="btn-back" id="btn-history-back">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <h2 class="header-title">History</h2>
+    </div>
+    <div id="history-list" class="history-list"></div>
+    <div id="history-empty" class="history-empty">
+      <div class="history-empty-icon">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </div>
+      <p>No scans yet</p>
+      <p class="history-empty-sub">Take a photo of a Hindi page to get started</p>
+    </div>
+  </div>
+
+  <!-- ========== WORD POPUP (bottom sheet) ========== -->
+  <div id="popup-backdrop" class="popup-backdrop"></div>
+  <div id="word-popup" class="word-popup">
+    <div class="popup-handle"></div>
+    <div class="popup-body">
+      <div class="popup-row">
+        <div class="popup-hindi" id="popup-hindi"></div>
+        <div class="popup-arrow" id="popup-arrow">→</div>
+        <div class="popup-meaning" id="popup-meaning"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== CONFIRM DIALOG ========== -->
+  <div id="confirm-overlay" class="confirm-overlay">
+    <div class="confirm-box">
+      <p class="confirm-msg">Delete this scan?</p>
+      <div class="confirm-actions">
+        <button class="confirm-btn confirm-cancel" id="confirm-cancel">Cancel</button>
+        <button class="confirm-btn confirm-ok" id="confirm-ok">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========== ERROR TOAST ========== -->
+  <div id="error-toast" class="error-toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
