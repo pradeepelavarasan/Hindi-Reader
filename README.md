@@ -45,7 +45,8 @@ The app was originally built for approx 20 students in a primary school Hindi cl
 
 Below was the usage among the class students:
 Below was the usage among the class students in a week:
-<img width="738" height="178" alt="image" src="https://github.com/user-attachments/assets/3ea4c0f0-96b9-41c4-a1ae-b6dae00e0e58" />
+<img width="748" height="105" alt="image" src="https://github.com/user-attachments/assets/1fb9d06d-00ab-4c8a-8cfe-aeaae6bd53d6" />
+
 
 
 ---
